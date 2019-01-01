@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>
+			HOKM !!!
+		</title>
+		<meta charset="utf-8">
+		<style type="text/css">
+			div#mainDiv {
+				border : 1px solid black;
+				height: 500px;
+				width: 900px;
+				position: absolute;
+				top: 10px;
+				left: 200px;
+			}
+			p#score1 {
+				position: absolute;
+				top: 329px;
+				left: 340px;
+				font-size: 200%;
+				color : blue;
+			}
+			p#score2 {
+				position: absolute;
+				top: 130px;
+				left: 770px;
+				font-size: 200%;
+				color : green;
+			}
+			p#nameplayer1 {
+				position: absolute;
+				top: 357px;
+				left: 260px;
+			}
+			p#nameplayer4 {
+				position: absolute;
+				top: 90px;
+				left: 110px;
+			}
+			p#nameplayer3 {
+				position: absolute;
+				top: 90px;
+				left: 260px;
+			}
+			p#nameplayer2 {
+				position: absolute;
+				top: 90px;
+				left: 740px;
+			}
+			div#player1 {
+				height: 100px;
+				width: 390px;
+				border : 1px solid black;
+				position: absolute;
+				top: 400px;
+				left: 250px;
+			}
+			
+			div#player2 {
+				height: 390px;
+				width: 100px;
+				border : 1px solid black;
+				position: absolute;
+				top: 50px;
+				left: 800px;
+			}
+			div#player3 {
+				height: 100px;
+				width: 390px;
+				border : 1px solid black;
+				position: absolute;
+				left: 250px;
+			}
+			div#player4 {
+				height: 390px;
+				width: 100px;
+				border : 1px solid black;
+				position: absolute;
+				top: 50px;
+			}
+			div#player1 div {
+				border : 1px solid black;
+				height: 100px;
+				width: 28px;
+				float: left;
+			}
+			div#player2 div {
+				border : 1px solid black;
+				height: 28px;
+				width: 98px;
+				float: left;
+			}
+			div#player3 div {
+				border : 1px solid black;
+				height: 100px;
+				width: 28px;
+				float: left;
+			}
+			div#player4 div {
+				border : 1px solid black;
+				height: 28px;
+				width: 98px;
+			}
+			div#player1 div:hover {
+				background-color: red;
+				cursor: pointer;
+			}
+			div#player2 div:hover {
+				background-color: red;
+				cursor: pointer;
+			}
+			div#player3 div:hover {
+				background-color: red;
+				cursor: pointer;
+			}
+			div#player4 div:hover {
+				background-color: red;
+				cursor: pointer;
+			}
+			div#karteplayer1 {
+				width: 70px;
+				height: 70px;
+				border : 1px solid black;
+				position: absolute;
+				top: 305px;
+				left: 400px;
+			}
+			div#karteplayer2 {
+				width: 70px;
+				height: 70px;
+				border : 1px solid black;
+				position: absolute;
+				top: 215px;
+				left: 500px;
+			}
+			div#karteplayer3 {
+				width: 70px;
+				height: 70px;
+				border : 1px solid black;
+				position: absolute;
+				top: 120px;
+				left: 400px;
+			}
+			div#karteplayer4 {
+				width: 70px;
+				height: 70px;
+				border : 1px solid black;
+				position: absolute;
+				top: 215px;
+				left: 300px;
+			}
+		</style>
+		<script src="b.js"></script>
+		<script>
+			var hokm ;
+				var kishorokone ;
+				var dare = true ;
+				var dorosbazikarde = true ; 
+				var zamine ;
+				var scores = [0,0];
+				var winner = [];
+				var dastechandom=0;
+				var turn=1 ;
+				var nobatedast = 1 ;
+				var cards = [] ;
+				var tekrari = false ;
+				var dasteaval = [] ;
+				var startedGame =false ;
+				var kartedadeshode = [] ;
+				var barandedas = 2;
+				var hakemdas = "1" ;
+				var khalha = ["K","G","D","P"];
+				var scoreround = [0,0];
+				var g = 0 ;
+			for (i=0;i<52;i++) {
+				j =  Math.floor(i/13);
+				k =  Math.floor(i%13)+2;
+				cards.push({id:i,khal:khalha[j],shomare:k});		}
+			$(document).ready(function(){
+				$("#button2").click(function() {
+			    	$("#button1")[0].style.visibility = "visible";
+
+			    	RestartGame();			    });
+				$("#button1").click(function() {
+			    	$("#button1")[0].style.visibility = "hidden";
+			    	$("#button2")[0].style.visibility = "visible";
+			    	var Witchplayerstart = tainehakem();
+			    	hakemdas = Witchplayerstart ; 
+			    	dasdadan(5,Witchplayerstart);
+			    			    });
+			    function tainehakem(){
+			    	kishorokone = Math.floor(Math.random()*4);
+			    	if(kishorokone == "0") {
+			    	turn = 1;
+			    	document.getElementById("nameplayer1").style.color="red";
+			    	return "player1";
+			    	}
+			    	if(kishorokone == "1") {
+			    	turn = 2;
+			    	document.getElementById("nameplayer2").style.color="red";
+			    	return "player2";
+			    	
+			    	}
+			    	if(kishorokone == "2") {
+			    	turn = 3;
+			    	document.getElementById("nameplayer3").style.color="red";
+			    	return "player3";
+			    	
+			    	}
+			    	if(kishorokone == "3") {
+			    	turn = 4;
+			    	document.getElementById("nameplayer4").style.color="red";
+			    	return "player4";
+			    	}			    }
+			    function dasdadan(tedad,nafar) {
+			        for (i=0;i<tedad;i++) {
+			        	var ran = Math.floor(Math.random()*52);
+			        	for (j=0;j<kartedadeshode.length;j++) 
+			        		{
+				        		if(kartedadeshode[j]==ran) 
+				        		{
+				        			tekrari = true ;
+				        		}
+				        	}
+			        	while (tekrari)
+			        	{
+
+				        	var ran = Math.floor(Math.random()*52);
+				        	tekrari = false ;
+				        	for (j=0;j<kartedadeshode.length;j++) {
+				        		if(kartedadeshode[j]==ran) {
+				        			tekrari = true ;
+				        		}
+				        	}
+				        	if (kartedadeshode.length>51) {tekrari=false};
+				        	
+				        }
+			        	dasteaval[i]= (cards[ran]);
+			        	kartedadeshode.push(dasteaval[i].id);
+				        var kart = document.createElement("div");
+				        kart.onclick = function () {
+				        	clickonkarts(this);
+				        }
+				        document.getElementById(nafar).appendChild(kart);
+				        var fspan = document.createElement("span");
+	                    var t = document.createTextNode(dasteaval[i].shomare);
+	                    fspan.appendChild(t);
+	                    kart.appendChild(fspan);
+	                    var fspan = document.createElement("span");
+	                    var t = document.createTextNode(dasteaval[i].khal);
+	                    fspan.appendChild(t);
+	                    fspan.style.visibility= "hidden";
+	                    kart.appendChild(fspan);
+	                    var fspan = document.createElement("span");
+	                    var t = document.createTextNode(dasteaval[i].id);
+	                    fspan.appendChild(t);
+	                    fspan.style.visibility = "hidden";
+	                    kart.appendChild(fspan);
+	                    fkhal = document.createElement("img");
+	                    if(dasteaval[i].khal=="D" ) {
+	                    	fkhal.src = "3.jpg";
+	                    }
+	                    if(dasteaval[i].khal=="G" ) {
+	                    	fkhal.src = "4.jpg";
+	                    }
+	                    if(dasteaval[i].khal=="K" ) {
+	                    	fkhal.src = "1.jpg";
+	                    }
+	                    if(dasteaval[i].khal=="P" ) {
+	                    	fkhal.src = "2.jpg";
+	                    }
+	                    fkhal.style.width ="28px";
+	                    fkhal.style.height= "28px" ;
+	                    kart.appendChild(fkhal);
+				    }			}
+				function hokmkardan() {
+
+					if (!startedGame) {
+						if(kishorokone==0) {
+						dasdadan(8,"player1");
+				    	dasdadan(13,"player2");
+				    	dasdadan(13,"player3");
+				    	dasdadan(13,"player4");
+				    	}
+				    	if(kishorokone==1) {
+						dasdadan(13,"player1");
+				    	dasdadan(8,"player2");
+				    	dasdadan(13,"player3");
+				    	dasdadan(13,"player4");
+				    	}
+				    	if(kishorokone==2) {
+						dasdadan(13,"player1");
+				    	dasdadan(13,"player2");
+				    	dasdadan(8,"player3");
+				    	dasdadan(13,"player4");
+				    	}
+				    	if(kishorokone==3) {
+						dasdadan(13,"player1");
+				    	dasdadan(13,"player2");
+				    	dasdadan(13,"player3");
+				    	dasdadan(8,"player4");
+				    	}
+				    }
+			    	sorthands("#player1");
+			    	sorthands("#player2");
+			    	sorthands("#player3");
+			    	sorthands("#player4");
+			    	startedGame = true ;						    }    
+				function sorthands(who) {
+					var min ; 
+					for(i=0 ; i<13 ; ) {
+						min= yaftaneminimum($(who)[0].children,i);
+						tavizeja(min[1],i,who);
+						i++;
+					}			}
+				function yaftaneminimum(temp,startnumber) {
+					var minimum = [temp[startnumber].children[2].innerHTML,startnumber];
+					for (l=startnumber; l<13; l++) {
+						if ((1*minimum[0]) >= (1*(temp[l].children[2].innerHTML))) {
+							minimum[0] = temp[l].children[2].innerHTML;
+							minimum[1] = l;
+						}
+					}
+					return minimum ;			}
+				function tavizeja(makanekartemin,makaneavali,ki) {
+					var ali = $(ki)[0].children[makaneavali].children[0].innerHTML;
+					$(ki)[0].children[makaneavali].children[0].innerHTML = 
+					$(ki)[0].children[makanekartemin].children[0].innerHTML;
+					$(ki)[0].children[makanekartemin].children[0].innerHTML = ali ;
+					ali = $(ki)[0].children[makaneavali].children[1].innerHTML;
+					$(ki)[0].children[makaneavali].children[1].innerHTML = 
+					$(ki)[0].children[makanekartemin].children[1].innerHTML;
+					$(ki)[0].children[makanekartemin].children[1].innerHTML = ali ;
+					ali = $(ki)[0].children[makaneavali].children[2].innerHTML;
+					$(ki)[0].children[makaneavali].children[2].innerHTML = 
+					$(ki)[0].children[makanekartemin].children[2].innerHTML;
+					$(ki)[0].children[makanekartemin].children[2].innerHTML = ali ;
+					ali = $(ki)[0].children[makaneavali].children[3].src;
+					$(ki)[0].children[makaneavali].children[3].src = 
+					$(ki)[0].children[makanekartemin].children[3].src;
+					$(ki)[0].children[makanekartemin].children[3].src = ali ;			}
+				function clickonkarts(iin) {
+					
+					if(startedGame)
+			        { 	
+			        	if(nobatedast == 1){
+			        		zamine = iin.children[1].innerHTML;
+			        	}
+			        	var bazikon = "karte"+iin.offsetParent.id;
+			        	
+			        	if (bazikon == "karteplayer"+turn)
+			        	{
+				        	
+		                    dare = false ;
+		                    for (n=0;n<13;n++){
+		                    	if (iin.offsetParent.children[n].children[1].innerHTML==zamine)
+		                    	{dare = true}
+		                	}
+		                	dorosbazikarde = true ;
+		                	if (iin.children[1].innerHTML!=zamine )
+		                		{
+		                		dorosbazikarde = false ;
+		                	}
+		                	if (!dare) {
+		                		dorosbazikarde = true ;
+		                	}
+		                	if (iin.children[0].innerHTML == "") {
+		                		dorosbazikarde = false ;
+		                	}
+		                	
+		                    if (!dorosbazikarde)
+		                    	{ 
+		                    		console.log("kart e doros entekhab kon");
+		                    	}
+		                    else{
+			                    var fspan = document.createElement("span");
+			                    var t = document.createTextNode(iin.children[0].innerHTML); 
+			                    fspan.appendChild(t);
+			                    document.getElementById(bazikon).appendChild(fspan);
+			                    var fspan = document.createElement("span");
+			                    var t = document.createTextNode(iin.children[1].innerHTML);
+			                    fspan.appendChild(t);
+			                    fspan.style.visibility = "hidden";
+			                    document.getElementById(bazikon).appendChild(fspan);
+
+			                    var imagekhal = document.createElement("img");
+			                    imagekhal.src = iin.children[3].src ;
+			                    imagekhal.style.width ="40px";
+	                   		 	imagekhal.style.height= "40px" ;
+			                    document.getElementById(bazikon).appendChild(imagekhal);
+			                    
+			                    iin.children[0].innerHTML = "";
+			                    iin.children[1].innerHTML = "";
+			                    iin.children[3].style.display = "none";
+			                    nobatedast++;
+			                    turn = 1+turn%4 ;
+			                }
+		                }
+		                else {
+		                	console.log("nobate shoma nis !!!!");
+		                }
+	                    if(nobatedast==5)
+	                    {
+					    	turn = 1;
+					    	nobatedast = 1 ;
+					    	win();
+					    	dastechandom++;
+					    	clearpage();
+	                    }
+			        }
+			        if (!startedGame) {
+			        	document.getElementById("FirstPa").innerHTML = iin.childNodes[1].innerHTML;
+			        	hokm = iin.childNodes[1].innerHTML;
+			        	hokmkardan ();
+			        	}
+			        if(hokm=="") {
+			        	var x ;
+			        	startedGame =false ;
+			        	if (barandedas==1 && hakemdas=="player1") {
+			        	dasdadan(5,"player1");
+			        	x = "player1";
+			        	}
+			        	if (barandedas==1 && hakemdas=="player3") {
+			        	dasdadan(5,"player3");
+			        	x = "player3";
+			        	}
+			        	if (barandedas==0 && hakemdas=="player1") {
+			        	dasdadan(5,"player2");
+			        	x = "player2";
+			        	}
+			        	if (barandedas==0 && hakemdas=="player3") {
+			        	dasdadan(5,"player4");
+			        	x = "player4";
+			        	}
+			        	if (barandedas==0 && hakemdas=="player2") {
+			        	dasdadan(5,"player2");
+			        	x = "player2";
+			        	}
+			        	if (barandedas==0 && hakemdas=="player4") {
+			        	dasdadan(5,"player4");
+			        	x = "player4";
+			        	}
+			        	if (barandedas==1 && hakemdas=="player2") {
+			        	dasdadan(5,"player3");
+			        	x = "player3";
+			        	}
+			        	if (barandedas==1 && hakemdas=="player4") {
+			        	dasdadan(5,"player1");
+			        	x = "player1";
+			        	}
+			        	hakemdas = x ;
+			        	nameDiv = "name"+hakemdas;
+			        	document.getElementById(nameDiv).style.color = "red";
+			        	turn = hakemdas[6];
+			        	kishorokone = 1*(turn-1) ; 
+			        }	
+			    	}		        	
+			    function win() {
+			    	algoritmwin();
+			    	turn = winner[dastechandom];
+			    	document.getElementById("nameplayer1").style.color = "black" ;
+			    	document.getElementById("nameplayer2").style.color = "black" ;
+			    	document.getElementById("nameplayer3").style.color = "black" ;
+			    	document.getElementById("nameplayer4").style.color = "black" ;
+			    	var namebazikone = "nameplayer"+turn;
+
+			        document.getElementById(namebazikone).style.color = "red";
+			    	if(winner[dastechandom]==1 || winner[dastechandom]==3 ) {
+			    		scores[0]++;
+				    	document.getElementById("score1").innerHTML = scores[0];
+					}
+				    if(winner[dastechandom]==2 || winner[dastechandom]==4 ) {
+				    	scores[1]++;
+				    	document.getElementById("score2").innerHTML = scores[1];
+				    	
+				    }
+				    
+				    if (scores[0]==7)
+				    { 
+				    	if(scores[1]==0) {console.log("COT shodid"); scoreround[0]++;  }  scoreround[0]++; console.log("winner in das TEAM 1"); NEXTROUND(); barandedas   = 1;
+				    }
+				    if (scores[1]==7)
+				    { 
+				    	if(scores[0]==0) { console.log("COT shodid"); scoreround[1]++; }  scoreround[1]++; console.log("winner in das TEAM 2");  NEXTROUND();	barandedas = 0;
+				    }		    }
+			    function algoritmwin() {
+			    	var q = [] ;
+			    	q[0] = 1*document.getElementById("karteplayer1").children[0].innerHTML;
+			    	q[1] = 1*document.getElementById("karteplayer2").children[0].innerHTML;
+			    	q[2] = 1*document.getElementById("karteplayer3").children[0].innerHTML;
+			    	q[3] = 1*document.getElementById("karteplayer4").children[0].innerHTML;
+			    	var khale = [] ;
+			    	khale[0] = document.getElementById("karteplayer1").children[1].innerHTML;
+			    	khale[1] = document.getElementById("karteplayer2").children[1].innerHTML;
+			    	khale[2] = document.getElementById("karteplayer3").children[1].innerHTML;
+			    	khale[3] = document.getElementById("karteplayer4").children[1].innerHTML;
+			    	if(khale[0] == hokm) {
+			    		q[0] = q[0] + 200 ;
+			    	}
+			    	if (khale[0]==zamine) {
+			    		q[0] = q[0] + 100 ;
+			    	}
+			    	if(khale[1] == hokm) {
+			    		q[1] = q[1] + 200 ;
+			    	}
+			    	if (khale[1]==zamine) {
+			    		q[1] = q[1] + 100 ;
+			    	}
+			    	if(khale[2] == hokm) {
+			    		q[2] = q[2] + 200 ;
+			    	}
+			    	if (khale[2]==zamine) {
+			    		q[2] = q[2] + 100 ;
+			    	}
+			    	if(khale[3] == hokm) {
+			    		q[3] = q[3] + 200 ;
+			    	}
+			    	if (khale[3]==zamine) {
+			    		q[3] = q[3] + 100 ;
+			    	}
+			    	winner[dastechandom]=1;
+			    	var z = 0 ;
+			    	if (q[1] > q[z]) {
+			    		winner[dastechandom] = 2;
+			    		z=1;
+			    	}
+			    	if (q[2] > q[z]) {
+			    		winner[dastechandom] = 3;
+			    		z=2;
+			    	}
+			    	if (q[3] > q[z]) {
+			    		winner[dastechandom] = 4;
+			    	}			    }
+			    function clearpage() {
+		    		var hasangholi = document.getElementById("karteplayer1");
+		    		var g = hasangholi.childNodes.length ;
+		    		for (i=0 ; i <g ; i++) {
+		    		hasangholi.removeChild(hasangholi.childNodes[0]);
+		    		}
+		    		var hasangholi = document.getElementById("karteplayer2");
+		    		g = hasangholi.childNodes.length
+		    		for (i=0 ; i <g ; i++) {
+		    		hasangholi.removeChild(hasangholi.childNodes[0]);
+		    		}	
+		    		var hasangholi = document.getElementById("karteplayer3");
+		    		g = hasangholi.childNodes.length ;
+		    		for (i=0 ; i <g ; i++) {
+		    		hasangholi.removeChild(hasangholi.childNodes[0]);
+		    		}
+		    		var hasangholi = document.getElementById("karteplayer4");
+		    		g = hasangholi.childNodes.length ;
+		    		for (i=0 ; i <g ; i++) {
+		    		hasangholi.removeChild(hasangholi.childNodes[0]);
+		    		}
+		    			    }
+		    	function cleardastha() {
+		    		var hasangholi = document.getElementById("player1");
+		    		var g = hasangholi.childNodes.length ;
+		    		for (i=0 ; i <g ; i++) {
+		    		hasangholi.removeChild(hasangholi.childNodes[0]);
+		    		}
+		    		var hasangholi = document.getElementById("player2");
+		    		g = hasangholi.childNodes.length
+		    		for (i=0 ; i <g ; i++) {
+		    		hasangholi.removeChild(hasangholi.childNodes[0]);
+		    		}	
+		    		var hasangholi = document.getElementById("player3");
+		    		g = hasangholi.childNodes.length ;
+		    		for (i=0 ; i <g ; i++) {
+		    		hasangholi.removeChild(hasangholi.childNodes[0]);
+		    		}
+		    		var hasangholi = document.getElementById("player4");
+		    		g = hasangholi.childNodes.length ;
+		    		for (i=0 ; i <g ; i++) {
+		    		hasangholi.removeChild(hasangholi.childNodes[0]);
+		    		}		    	}		    
+		    	function RestartGame() {
+		    		console.log("reset");
+		    		$("#button2")[0].style.visibility = "visible";
+		    		hokm ="" ;
+				 	dare = true ;
+					dorosbazikarde = true ; 
+					zamine = "" ;
+					scores = [0,0];
+					scoreround = [0,0];
+					winner = [];
+					dastechandom=0;
+					turn=1 ;
+					nobatedast = 1 ;
+					tekrari = false ;
+					dasteaval = [] ;
+					startedGame =false ;
+					kartedadeshode = [] ;
+					cleardastha() ;
+		    		clearpage() ; 		    	}
+		    	function NEXTROUND() {
+		    		document.getElementById("nameplayer1").style.color = "black" ;
+			    	document.getElementById("nameplayer2").style.color = "black" ;
+			    	document.getElementById("nameplayer3").style.color = "black" ;
+			    	document.getElementById("nameplayer4").style.color = "black" ;
+		    		hokm ="" ;
+				 	dare = true ;
+					dorosbazikarde = true ; 
+					zamine = "" ;
+					console.log(scoreround);
+					if (scoreround[0]>7) {
+						console.log("team 1 borde");
+					}
+					if (scoreround[1]>7) {
+						console.log("team 2 borde");
+					}
+					scores = [0,0];
+					
+					document.getElementById("score1").innerHTML = scores[0];
+					document.getElementById("score2").innerHTML = scores[1];
+					winner = [];
+					dastechandom=0;
+					nobatedast = 1 ;
+					tekrari = false ;
+					dasteaval = [] ;
+					kartedadeshode = [] ;
+					cleardastha() ;
+		    		clearpage() ; 
+		    		}
+			});
+		</script>
+	</head>
+	<body>
+		<button id="button1">start</button>
+		<button id="button2" style="visibility:hidden"> Restart game ! </button>
+		
+		<br>
+		<span>hokm : </span><span id="FirstPa">  </span>
+		<br>
+		<br>
+		<div id="mainDiv">
+			<p id="score1"> 0 </p>
+			<p id="score2"> 0 </p>
+			<p id="nameplayer1">player 1</p>
+			<p id="nameplayer2">player 2</p>
+			<p id="nameplayer3">player 3</p>
+			<p id="nameplayer4">player 4</p>
+			<div id="karteplayer1"></div>
+			<div id="karteplayer2"></div>
+			<div id="karteplayer3"></div>
+			<div id="karteplayer4"></div>
+			<div id="player1"></div>
+			<div id="player2"></div>
+			<div id="player3"></div>
+			<div id="player4"></div>
+		</div>
+	</body>
+
+</html>
